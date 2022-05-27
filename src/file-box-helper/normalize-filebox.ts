@@ -28,7 +28,7 @@ const greenFileBoxTypes = [
  *  then it should be convert to a UUID file box before send out
  */
 const yellowFileBoxTypes = [
-  FileBoxType.Buffer,
+  // FileBoxType.Buffer,
   FileBoxType.Base64,
 ]
 

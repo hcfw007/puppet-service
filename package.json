@@ -66,7 +66,7 @@
     "why-is-node-running": "^2.2.1"
   },
   "peerDependencies": {
-    "wechaty-puppet": "^1.19.1"
+    "wechaty-puppet": "^1.20.1"
   },
   "dependencies": {
     "clone-class": "^1.1.1",

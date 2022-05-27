@@ -97,6 +97,7 @@ class PuppetService extends PUPPET.Puppet {
   protected _grpcManager?: GrpcManager
   get grpcManager (): GrpcManager {
     if (!this._grpcManager) {
+      this.emit('error', 'no grpc manager')
       throw new Error('no grpc manager')
     }
     return this._grpcManager
@@ -184,6 +185,8 @@ class PuppetService extends PUPPET.Puppet {
     )
 
     log.verbose('PuppetService', 'onStart() ... done')
+    log.verbose('PuppetService', 'start healthCheck')
+    this.startHealthCheck()
   }
 
   override async onStop (): Promise<void> {
@@ -201,6 +204,8 @@ class PuppetService extends PUPPET.Puppet {
     }
 
     log.verbose('PuppetService', 'onStop() ... done')
+    log.verbose('PuppetService', 'stop healthCheck')
+    this.stopHealthCheck()
   }
 
   protected hookPayloadStore (): void {
@@ -1982,6 +1987,17 @@ class PuppetService extends PUPPET.Puppet {
         return messageIdWrapper.getValue()
       }
     }
+  }
+
+  healthCheckInterval?: NodeJS.Timer
+  startHealthCheck () {
+    this.healthCheckInterval = setInterval(() => {
+      this.ding('healthCheck')
+    }, 60 * 1000)
+  }
+
+  stopHealthCheck () {
+    clearInterval(this.healthCheckInterval!)
   }
 
 }
